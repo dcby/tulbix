@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: "Inter";
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+label.input {
+  align-items: center;
+  display: inline-flex;
+  gap: 6px;
+}
+
+
+@import "./styles/button.scss";
+@import "./styles/input.checkbox.scss";
+@import "./styles/input.radio.scss";
+@import "./styles/input.text.scss";
+@import "./styles/select.scss";

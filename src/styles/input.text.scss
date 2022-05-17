@@ -1,0 +1,58 @@
+input[type=text],
+input[type=number],
+input[type=password] {
+	align-items: center;
+	background-color: #fff;
+	border-radius: 4px;
+	border: 1px solid #7393bd;
+	box-sizing: border-box;
+	color: #121826;
+	display: inline-flex;
+	font-family: "Inter";
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 16px;
+	max-height: 32px; // max/min hack works to perfectly center text vertically
+	min-height: 32px; // while generic 'height' moves text 1px down for some reason
+	padding: 2px 8px;
+	padding-left: var(--input-padding-left, 8px);
+	padding-right: var(--input-padding-right, 8px);
+	position: relative;
+	text-align: var(--input-text-align);
+	transition-duration: 0.1s;
+	transition-property: border-color;
+
+	&:disabled {
+		border-color: #b3bfcf;
+		color: #8a93a8;
+		opacity: 1;
+	}
+
+	&:focus {
+		border-color: #3b82f6;
+	}
+
+	&:hover {
+		border-color: #0f61e7;
+	}
+
+	// &.ng-invalid.ng-touched {
+	// 	border-color: #ee6e71;
+	// }
+
+	// &.input--mark-valid {
+	// 	&.ng-valid.ng-touched {
+	// 		border-color: #18b698;
+	// 	}
+	// }
+}
+
+input[type=number] {
+	-moz-appearance: textfield;
+
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+}
