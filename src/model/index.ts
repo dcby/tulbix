@@ -7,14 +7,15 @@ interface CliOptionBase {
   summary: ReactNode;
 }
 
+interface RadiosCliOption extends CliOptionBase {
+  offKey: string;
+  options: [number | string, string][],
+  type: "radios";
+}
+
 interface SelectCliOption extends CliOptionBase {
-  options: [number | string | undefined, string][];
+  options: [number | string, string][];
   type: "select";
 }
 
-interface TripleCliOption extends CliOptionBase {
-  offKey: string;
-  type: "triple";
-}
-
-export type CliOption = SelectCliOption | TripleCliOption;
+export type CliOption = RadiosCliOption | SelectCliOption;

@@ -27,7 +27,8 @@
             {
                 "alphabetize": {
                     "order": "asc"
-                }
+                },
+                "warnOnUnassignedImports": true
             }
         ],
         "react/jsx-tag-spacing": [
