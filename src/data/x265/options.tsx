@@ -8,6 +8,7 @@ const defaultTripletOptions: [string, string][] = [
 ];
 
 export const bPyramid: CliOption = {
+  // groupId: "",
   key: "--b-pyramid",
   offKey: "--no-b-pyramid",
   options: defaultTripletOptions,

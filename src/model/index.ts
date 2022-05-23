@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 interface CliOptionBase {
   altKey?: string;
   dataTypes?: string[];
+  groupId: string;
   key: string;
   summary: ReactNode;
 }
