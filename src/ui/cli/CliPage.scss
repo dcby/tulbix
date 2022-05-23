@@ -1,10 +1,9 @@
-.CliBoard {
-  background-color: #eee;
+.CliPage {
+  background-color: #e5e5e5;
   display: flex;
   flex-direction: column;
 
   .CliEditor {
     flex: 1 1;
-    margin: 0 auto;
   }
 }

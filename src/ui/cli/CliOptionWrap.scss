@@ -6,6 +6,10 @@
 
   &__Content {
     margin-left: 14px;
+
+    > .Radios, .SelectWrap {
+      margin-top: 8px;
+    }
   }
 
   &__Summary {
@@ -24,17 +28,25 @@
     }
   }
 
-  button.CliOptionWrap__SummaryButton {
+  .CliOptionWrap__SummaryButton {
+    flex: 1 0;
     font-size: 16px;
     font-weight: 700;
+    line-height: 1em;
     margin-left: 16px;
+    padding: 4px 0;
+    text-align: right;
   }
 
   > legend {
+    align-items: center;
+    display: flex;
     padding: 0;
+    width: 100%;
 
     > code {
       color: #241500;
+      flex: 0 0 auto;
       font-family: "Inconsolata";
       font-size: inherit;
       font-weight: 500;

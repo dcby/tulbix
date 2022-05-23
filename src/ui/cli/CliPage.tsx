@@ -3,7 +3,7 @@ import "./CliPage.scss";
 
 export default function CliPage() {
   return (
-    <div className="CliBoard">
+    <div className="CliPage">
       <CliEditor />
     </div>
   );

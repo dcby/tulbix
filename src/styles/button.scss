@@ -9,8 +9,10 @@ button.button--link {
 }
 
 button.button--flow {
+	---color: #7393bd;
 	background: transparent;
 	border: none;
+	color: var(---color);
 	cursor: pointer;
 	font-family: inherit;
   font-size: inherit;
@@ -18,4 +20,8 @@ button.button--flow {
 	line-height: inherit;
 	margin: 0;
 	padding: 0;
+
+	&:hover {
+		---color: #0f61e7;
+	}
 }

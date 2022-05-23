@@ -1,8 +1,8 @@
-import { bPyramid, preset } from "./options";
-
-export { bPyramid, preset };
+import * as opts from "./options";
 
 export const options = [
-  bPyramid,
-  preset,
+  opts.bPyramid,
+  opts.lossless,
+  opts.preset,
+  opts.slowFirstpass,
 ];

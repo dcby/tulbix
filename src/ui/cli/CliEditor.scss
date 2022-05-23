@@ -1,6 +1,21 @@
 .CliEditor {
-  background-color: #fff;
-  display: block;
-  padding: 14px;
-  width: 700px;
+  overflow-y: auto;
+
+  &__Content {
+    background-color: #f5f5f5;
+    margin: 0 auto;
+    padding: 14px;
+    position: relative;
+    width: 700px;
+  }
+
+  &__NavWrap {
+    position: absolute;
+    left: calc(100% + 16px);
+    top: 16px;
+
+    > .CliEditorNav {
+      position: fixed;
+    }
+  }
 }

@@ -8,49 +8,42 @@ export type CliEditorStateAction =
 
 export interface CliEditorState {
   options: CliOption[];
-  showAllSummaries: boolean;
-  showSummary: Record<string, true>;
+  showSummary: Set<string>;
   value: Record<string, unknown>;
 }
 
 export const defaultCliEditorState: CliEditorState = {
   options: [],
-  showAllSummaries: false,
-  showSummary: {},
+  showSummary: new Set(),
   value: {},
 };
 
 export function cliEditorStateReducer(state: CliEditorState, action: CliEditorStateAction): CliEditorState {
   switch (action.type) {
     case "allSummaries.toogle":
-      if (state.showAllSummaries) {
+      if (state.showSummary.size === state.options.length) {
         return {
           ...state,
-          showAllSummaries: false,
-          showSummary: {},
+          showSummary: new Set(),
         };
       } else {
         return {
           ...state,
-          showAllSummaries: true,
+          showSummary: new Set(state.options.map(e => e.key))
         };
       }
 
     case "summary.toggle": {
-      let summary: Record<string, true>;
-      if (state.showSummary[action.key]) {
-        summary = { ...state.showSummary };
-        delete summary[action.key];
+      const showSummary = new Set(state.showSummary);
+      if (showSummary.has(action.key)) {
+        showSummary.delete(action.key);
       } else {
-        summary = {
-          ...state.showSummary,
-          [action.key]: true,
-        };
+        showSummary.add(action.key);
       }
 
       return {
         ...state,
-        showSummary: summary,
+        showSummary,
       };
     }
 
