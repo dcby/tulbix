@@ -1,5 +1,11 @@
 import { CliOption } from "../../model";
+import { groups } from "./groups";
 import { presets } from "./lists";
+
+type GroupId = typeof groups[number]["id"];
+type X265CliOption = CliOption & {
+  groupId: GroupId;
+};
 
 const defaultTripletOptions: [string, string][] = [
   [":null", "Not set"],
@@ -7,8 +13,8 @@ const defaultTripletOptions: [string, string][] = [
   [":false", "Off"],
 ];
 
-export const bPyramid: CliOption = {
-  // groupId: "",
+export const bPyramid: X265CliOption = {
+  groupId: "slice-decision-options",
   key: "--b-pyramid",
   offKey: "--no-b-pyramid",
   options: defaultTripletOptions,
@@ -16,7 +22,8 @@ export const bPyramid: CliOption = {
   type: "radios",
 };
 
-export const lossless: CliOption = {
+export const lossless: X265CliOption = {
+  groupId: "quality-rate-control-and-rate-distortion-options",
   key: "--lossless",
   offKey: "--no-lossless",
   options: defaultTripletOptions,
@@ -24,7 +31,8 @@ export const lossless: CliOption = {
   type: "radios",
 };
 
-export const preset: CliOption = {
+export const preset: X265CliOption = {
+  groupId: "performance-options",
   altKey: "-p",
   dataTypes: ["integer", "string"],
   key: "--preset",
@@ -42,7 +50,8 @@ export const preset: CliOption = {
   type: "select",
 };
 
-export const slowFirstpass: CliOption = {
+export const slowFirstpass: X265CliOption = {
+  groupId: "quality-rate-control-and-rate-distortion-options",
   key: "--slow-firstpass",
   offKey: "--no-slow-firstpass",
   options: defaultTripletOptions,

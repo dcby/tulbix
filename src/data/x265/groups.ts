@@ -75,4 +75,4 @@ export const groups = [
     id: "vui-video-usability-information-options",
     name: "VUI (Video Usability Information) options",
   },
-];
+] as const;
