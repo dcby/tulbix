@@ -28,7 +28,7 @@ export const groups = [
     name: "Logging/Statistic Options",
   },
   {
-    id: "poop-filters",
+    id: "loop-filters",
     name: "Loop filters",
   },
   {
@@ -76,3 +76,27 @@ export const groups = [
     name: "VUI (Video Usability Information) options",
   },
 ] as const;
+
+export type GroupId = typeof groups[number]["id"];
+
+export const layout: GroupId[] = [
+  "executable-options",
+  "logging-statistic-options",
+  "performance-options",
+  "input-output-file-options",
+  "profile-level-tier",
+  "mode-decision-analysis",
+  "temporal-motion-search-options",
+  "spatial-intra-options",
+  "psycho-visual-options",
+  "slice-decision-options",
+  "quality-rate-control-and-rate-distortion-options",
+  "quantization-options",
+  "loop-filters",
+  "vui-video-usability-information-options",
+  "bitstream-options",
+  "dct-approximations",
+  "debugging-options",
+  "abr-ladder-options",
+  "svt-hevc-encoder-options",
+];

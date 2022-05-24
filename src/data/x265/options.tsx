@@ -1,8 +1,7 @@
 import { CliOption } from "../../model";
-import { groups } from "./groups";
+import { GroupId } from "./groups";
 import { presets } from "./lists";
 
-type GroupId = typeof groups[number]["id"];
 type X265CliOption = CliOption & {
   groupId: GroupId;
 };

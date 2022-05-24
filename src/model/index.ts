@@ -20,3 +20,8 @@ interface SelectCliOption extends CliOptionBase {
 }
 
 export type CliOption = RadiosCliOption | SelectCliOption;
+
+export interface CliOptionGroup {
+  readonly id: string;
+  readonly name: string;
+}
