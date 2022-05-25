@@ -1,4 +1,5 @@
-import { CliOption } from "../model";
+import * as x265 from "../data/x265";
+import { CliOption, CliOptionGroup } from "../model";
 
 export type CliEditorStateAction =
   | { type: "allSummaries.toogle" }
@@ -8,12 +9,16 @@ export type CliEditorStateAction =
 
 export interface CliEditorState {
   options: CliOption[];
+  layout: (CliOptionGroup & {
+    options?: CliOption[];
+  })[];
   showSummary: Set<string>;
   value: Record<string, unknown>;
 }
 
 export const defaultCliEditorState: CliEditorState = {
   options: [],
+  layout: createLayout(),
   showSummary: new Set(),
   value: {},
 };
@@ -68,4 +73,11 @@ export function cliEditorStateReducer(state: CliEditorState, action: CliEditorSt
     default:
       return defaultCliEditorState;
   }
+}
+
+
+// todo: move this to approppriate location
+function createLayout() {
+  const { groupsMap, groupsToOptionsMap, optionsMap, root } = x265;
+  return root.map(e => ({ ...groupsMap[e], options: groupsToOptionsMap[e].map(e => optionsMap[e]) }));
 }

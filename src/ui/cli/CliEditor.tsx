@@ -11,9 +11,18 @@ export default function CliEditor() {
 
   const [state, dispatch] = useReducer(cliEditorStateReducer, { ...defaultCliEditorState, options: options });
 
-  const nodes = state.options.map(e => (
-    <CliOptionWrap key={e.key} cliOption={e} showSummary={state.showSummary.has(e.key)} value={state.value[e.key]} />
-  ));
+  const nodes = state.layout.map(e => {
+    const nodes = e.options?.map(e => (
+      <CliOptionWrap key={e.key} cliOption={e} showSummary={state.showSummary.has(e.key)} value={state.value[e.key]} />
+    ));
+
+    return (
+      <section key={e.id} className="CliEditor__CliSection">
+        <h1>{e.name}</h1>
+        {nodes}
+      </section>
+    );
+  });
 
   return (
     <div className="CliEditor">

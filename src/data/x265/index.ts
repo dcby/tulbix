@@ -27,7 +27,7 @@ const temp = options.reduce((p: Record<string, string[]>, c: CliOption) => {
   return p;
 }, {});
 
-export const groupsToOptions = groups.reduce((p: Record<string, string[]>, c: CliOptionGroup) => {
+export const groupsToOptionsMap = groups.reduce((p: Record<string, string[]>, c: CliOptionGroup) => {
   p[c.id] = temp[c.id] ?? [];
   return p;
 }, {});
