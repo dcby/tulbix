@@ -1,11 +1,11 @@
 import * as x265 from "../data/x265";
-import { CliOption, CliOptionGroup } from "../model";
+import { CliOption, CliOptionGroup, CliOptionValue } from "../model";
 
 export type CliEditorStateAction =
   | { type: "allSummaries.toogle" }
   | { type: "group.toggle", id: string }
   | { type: "summary.toggle", key: string }
-  | { type: "value.patch", key: string, value: unknown }
+  | { type: "value.patch", key: string, value: CliOptionValue | undefined }
   ;
 
 export interface CliEditorState {
@@ -15,7 +15,7 @@ export interface CliEditorState {
     options: CliOption[];
   })[];
   showSummary: Set<string>;
-  value: Record<string, unknown>;
+  values: Record<string, CliOptionValue>;
 }
 
 export const defaultCliEditorState: CliEditorState = {
@@ -26,7 +26,7 @@ export const defaultCliEditorState: CliEditorState = {
   options: [],
   layout: createLayout(),
   showSummary: new Set(),
-  value: {},
+  values: {},
 };
 
 export function cliEditorStateReducer(state: CliEditorState, action: CliEditorStateAction): CliEditorState {
@@ -40,7 +40,7 @@ export function cliEditorStateReducer(state: CliEditorState, action: CliEditorSt
       } else {
         return {
           ...state,
-          showSummary: new Set(state.options.map(e => e.key))
+          showSummary: new Set(state.options.map(e => e.id))
         };
       }
 
@@ -67,20 +67,11 @@ export function cliEditorStateReducer(state: CliEditorState, action: CliEditorSt
     }
 
     case "value.patch": {
-      let value: Record<string, unknown>;
-      if (action.value === undefined) {
-        value = { ...state.value };
-        delete value[action.key];
-      } else {
-        value = {
-          ...state.value,
-          [action.key]: action.value,
-        };
-      }
+      const values = patchValue(state.values, action.key, action.value);
 
       return {
         ...state,
-        value,
+        values,
       };
     }
 
@@ -105,5 +96,17 @@ function toggle(map: Record<string, true>, key: string): Record<string, true> {
   return {
     ...map,
     [key]: true,
+  };
+}
+
+function patchValue(map: Record<string, CliOptionValue>, key: string, value: CliOptionValue | undefined) {
+  if (value === undefined) {
+    const { [key]: _, ...rest } = map;
+    return rest;
+  }
+
+  return {
+    ...map,
+    [key]: value,
   };
 }

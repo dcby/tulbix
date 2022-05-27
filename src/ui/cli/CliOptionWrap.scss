@@ -28,6 +28,26 @@
     }
   }
 
+  &__Switch {
+    border-radius: 2px;
+    color: #777;
+    cursor: pointer;
+    display: inline-block;
+    padding: 4px;
+
+    transition: 0.1s;
+    transition-property: background-color;
+
+    &:hover {
+      background-color: #eee;
+    }
+
+    &[aria-checked=true] {
+      color: #333;
+      font-weight: 800;
+    }
+  }
+
   .CliOptionWrap__SummaryButton {
     color: #888;
     flex: 1 0;
@@ -50,7 +70,7 @@
     width: 100%;
 
     > code {
-      color: #241500;
+      // color: #241500;
       flex: 0 0 auto;
       font-family: "Inconsolata";
       font-size: inherit;

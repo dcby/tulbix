@@ -16,7 +16,7 @@ export default function CliEditor() {
 
     const nodes: JSX.Element[] | undefined = isExpand
       ? e.options.map(e => (
-        <CliOptionWrap key={e.key} cliOption={e} showSummary={state.showSummary.has(e.key)} value={state.value[e.key]} />
+        <CliOptionWrap key={e.id} cliOption={e} showSummary={state.showSummary.has(e.id)} value={state.values[e.id]} />
       ))
       : undefined;
 

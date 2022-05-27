@@ -10,7 +10,7 @@ export const options: CliOption[] = [
 ];
 
 export const optionsMap = options.reduce((p: Record<string, CliOption>, c: CliOption) => {
-  p[c.key] = c;
+  p[c.id] = c;
   return p;
 }, {});
 
@@ -23,7 +23,7 @@ export const groupsMap = groups.reduce((p: Record<string, CliOptionGroup>, c: Cl
 
 const temp = options.reduce((p: Record<string, string[]>, c: CliOption) => {
   p[c.groupId] = p[c.groupId] ?? [];
-  p[c.groupId].push(c.key);
+  p[c.groupId].push(c.id);
   return p;
 }, {});
 
