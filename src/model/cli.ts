@@ -1,11 +1,18 @@
 import { ReactNode } from "react";
 
 interface CliKeyBase {
+  readonly defaultValue?: number | string;
   key: string;
+  /**
+   * Reference id to track keys amonth common handling of values, etc. The keys with same refId must have the same value
+   * definitions (defaultValue, options) otherwise the behavior is undefined.
+   */
+  refId?: string;
 }
 
 interface CliKeyWithOptions extends CliKeyBase {
-  options: [number | string, string][];
+  readonly defaultValue: number | string;
+  readonly options: [number | string, string][];
   type: "options";
 }
 
@@ -33,7 +40,7 @@ interface CliOptionBase {
 }
 
 interface CliOptionWithoutDataTypes extends CliOptionBase {
-  keys: (CliKey | CliKeyWithDataTypes)[];
+  keys: CliKey[];
 }
 
 interface CliOptionWithDataTypes extends CliOptionBase {

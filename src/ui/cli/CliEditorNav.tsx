@@ -14,7 +14,7 @@ function CliEditorNav() {
   );
 }
 
-// @ts-expect-error: Cannot assign to 'CliEditorNav' because it is a function.
+// @ts-expect-error: Cannot assign to ... because it is a function.
 CliEditorNav = memo(CliEditorNav);
 
 export default CliEditorNav;

@@ -2,6 +2,7 @@ import { CliOption } from "../../model";
 import { GroupId } from "./groups";
 import { presets } from "./lists";
 
+let defaultValue: number | string;
 let options: [number | string, string][];
 
 type X265CliOption = CliOption & {
@@ -10,7 +11,7 @@ type X265CliOption = CliOption & {
 
 export const bPyramid: X265CliOption = {
   groupId: "slice-decision-options",
-  id: "--b-pyramid",
+  id: "b-pyramid",
   keys: [
     {
       key: "--b-pyramid",
@@ -26,7 +27,7 @@ export const bPyramid: X265CliOption = {
 
 export const lossless: X265CliOption = {
   groupId: "quality-rate-control-and-rate-distortion-options",
-  id: "--lossless",
+  id: "lossless",
   keys: [
     {
       key: "--lossless",
@@ -43,16 +44,20 @@ export const lossless: X265CliOption = {
 export const preset: X265CliOption = {
   dataTypes: ["integer", "string"],
   groupId: "performance-options",
-  id: "--preset",
+  id: "preset",
   keys: [
     {
+      defaultValue: (defaultValue = presets.find(e => e[2] === true)?.[0] ?? ":null"),
       key: "--preset",
       options: (options = presets.map(e => [e[0], `${e[0]}. ${e[1]}`] as [number, string])),
+      refId: "preset",
       type: "options",
     },
     {
-      key: "--preset",
-      options: options,
+      defaultValue,
+      key: "-p",
+      options,
+      refId: "preset",
       type: "options",
     },
   ],
@@ -70,7 +75,7 @@ export const preset: X265CliOption = {
 
 export const slowFirstpass: X265CliOption = {
   groupId: "quality-rate-control-and-rate-distortion-options",
-  id: "--slow-firstpass",
+  id: "slow-firstpass",
   keys: [
     {
       key: "--slow-firstpass",

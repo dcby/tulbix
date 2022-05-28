@@ -4,11 +4,13 @@ import { CliOption, CliOptionGroup, CliOptionValue } from "../model";
 export type CliEditorStateAction =
   | { type: "allSummaries.toogle" }
   | { type: "group.toggle", id: string }
+  | { type: "option.toggle", id: string, key: string }
   | { type: "summary.toggle", key: string }
   | { type: "value.patch", key: string, value: CliOptionValue | undefined }
   ;
 
 export interface CliEditorState {
+  backKeyValues: Record<string, boolean | number | string>;
   expandGroups: Record<string, true>;
   options: CliOption[];
   layout: (CliOptionGroup & {
@@ -19,6 +21,7 @@ export interface CliEditorState {
 }
 
 export const defaultCliEditorState: CliEditorState = {
+  backKeyValues: {},
   expandGroups: x265.groups.reduce((p: Record<string, true>, c: CliOptionGroup) => {
     p[c.id] = true;
     return p;
@@ -52,6 +55,14 @@ export function cliEditorStateReducer(state: CliEditorState, action: CliEditorSt
       };
     }
 
+    case "option.toggle": {
+      const values = toggleOption();
+      return {
+        ...state,
+        values,
+      };
+    }
+
     case "summary.toggle": {
       const showSummary = new Set(state.showSummary);
       if (showSummary.has(action.key)) {
@@ -76,7 +87,31 @@ export function cliEditorStateReducer(state: CliEditorState, action: CliEditorSt
     }
 
     default:
-      return defaultCliEditorState;
+      return state;
+  }
+
+
+
+  function toggleOption(): Record<string, CliOptionValue> {
+    const { id, key } = action as { id: string, key: string };
+
+    if (state.values[id]?.key === key) {
+      const { [id]: _, ...rest } = state.values;
+      return rest;
+    }
+  
+    let arg: boolean | number | string | undefined;
+    const { defaultValue, refId } = x265.getCliKey(id, key);
+    if (refId && refId in state.backKeyValues) {
+      arg = state.backKeyValues[refId];
+    } else {
+      arg = defaultValue;
+    }
+  
+    return {
+      ...state.values,
+      [id]: { arg, key },
+    };
   }
 }
 
@@ -85,18 +120,6 @@ export function cliEditorStateReducer(state: CliEditorState, action: CliEditorSt
 function createLayout() {
   const { groupsMap, groupsToOptionsMap, optionsMap, root } = x265;
   return root.map(e => ({ ...groupsMap[e], options: groupsToOptionsMap[e].map(e => optionsMap[e]) }));
-}
-
-function toggle(map: Record<string, true>, key: string): Record<string, true> {
-  if (map[key] === true) {
-    const { [key]: _, ...rest } = map;
-    return rest;
-  }
-
-  return {
-    ...map,
-    [key]: true,
-  };
 }
 
 function patchValue(map: Record<string, CliOptionValue>, key: string, value: CliOptionValue | undefined) {
@@ -108,5 +131,17 @@ function patchValue(map: Record<string, CliOptionValue>, key: string, value: Cli
   return {
     ...map,
     [key]: value,
+  };
+}
+
+function toggle(map: Record<string, true>, key: string): Record<string, true> {
+  if (map[key] === true) {
+    const { [key]: _, ...rest } = map;
+    return rest;
+  }
+
+  return {
+    ...map,
+    [key]: true,
   };
 }

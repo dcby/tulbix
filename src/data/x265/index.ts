@@ -1,4 +1,4 @@
-import { CliOption, CliOptionGroup } from "../../model";
+import { CliKey, CliOption, CliOptionGroup } from "../../model";
 import { groups as grps, layout } from "./groups";
 import * as opts from "./options";
 
@@ -31,5 +31,17 @@ export const groupsToOptionsMap = groups.reduce((p: Record<string, string[]>, c:
   p[c.id] = temp[c.id] ?? [];
   return p;
 }, {});
+
+const keysMap = options.reduce((p: Record<string, Record<string, CliKey>>, c: CliOption) => {
+  p[c.id] = c.keys.reduce((p: Record<string, CliKey>, c: CliKey) => {
+    p[c.key] = c;
+    return p;
+  }, {});
+  return p;
+}, {});
+
+export function getCliKey(id: string, key: string): CliKey {
+  return keysMap[id][key];
+}
 
 export { layout as root };

@@ -1,7 +1,5 @@
 import { ReactNode, memo, useContext } from "react";
 import { CliOption, CliOptionValue } from "../../model";
-import Radios from "../Radios";
-import SelectWrap from "../SelectWrap";
 import "./CliOptionWrap.scss";
 import { CliEditorDispatch } from "./context";
 
@@ -16,20 +14,14 @@ function CliOptionWrap({ cliOption, showSummary, value }: CliOptionWrapProps) {
 
   const dispatch = useContext(CliEditorDispatch);
 
-  // const key = cliOption.key
-  //   + (cliOption.altKey ? `, ${cliOption.altKey}` : "")
-  //   + ("offKey" in cliOption ? `, ${cliOption.offKey}` : "")
-  //   + (cliOption.dataTypes ? ` <${cliOption.dataTypes.join("|")}>` : "");
-
-  // const keys = cliOption.keys.map((e, i) => )
-
-  // const isKeyChecked = value?.key === cliOption.key;
-
-  // const key = (
-  //   <span className="CliOptionWrap__Switch" role="switch" aria-checked={isKeyChecked} onClick={() => dispatch({ type: "value.patch", key: cliOption.id, value: isKeyChecked ? undefined : { key: cliOption.key }})}>
-  //     {cliOption.key}
-  //   </span>
-  // );
+  const keys = cliOption.keys.map((e, i) => {
+    const elem = (
+      <span key={e.key} className="CliOptionWrap__Switch" role="switch" aria-checked={value?.key === e.key} onClick={() => dispatch({ type: "option.toggle", id: cliOption.id, key: e.key })}>
+        {e.key}
+      </span>
+    );
+    return i > 0 ? [", ", elem] : [elem];
+  }).flat();
   
   // let control: ReactNode;
 
@@ -72,8 +64,8 @@ function CliOptionWrap({ cliOption, showSummary, value }: CliOptionWrapProps) {
   return (
     <fieldset className="CliOptionWrap">
       <legend>
-        {/* <code>{key}</code> */}
-        {/* <button type="button" className="button--flow CliOptionWrap__SummaryButton" onClick={() => dispatch({ type: "summary.toggle", key: cliOption.key })}>&#9974;</button> */}
+        <code>{keys}</code>
+        <button type="button" className="button--flow CliOptionWrap__SummaryButton" onClick={() => dispatch({ type: "summary.toggle", key: cliOption.id })}>&#9974;</button>
       </legend>
       <div className="CliOptionWrap__Content">
         {summary}
@@ -82,45 +74,48 @@ function CliOptionWrap({ cliOption, showSummary, value }: CliOptionWrapProps) {
   );
 }
 
-export default memo(CliOptionWrap);
+// @ts-expect-error: Cannot assign to ... because it is a function.
+CliOptionWrap = memo(CliOptionWrap);
 
-const re = /^\d+$/;
+export default CliOptionWrap;
 
-function otov(value: number | string) {
-  switch (value) {
-    case ":null":
-      return undefined;
-    
-    case ":false":
-      return false;
-    
-    case ":true":
-      return true;
-    
-    default:
-      if (typeof value === "string" && re.test(value)) {
-        return Number.parseInt(value);
-      }
-      return value;
-  }
-}
+// const re = /^\d+$/;
 
-function vtoo(value: unknown) {
-  switch (value) {
-    case false:
-      return ":false";
+// function otov(value: number | string): boolean | number | string | undefined {
+//   switch (value) {
+//     case ":null":
+//       return undefined;
     
-    case true:
-      return ":true";
+//     case ":false":
+//       return false;
     
-    default:
-      switch (typeof value) {
-        case "number":
-        case "string":
-          return value;
+//     case ":true":
+//       return true;
+    
+//     default:
+//       if (typeof value === "string" && re.test(value)) {
+//         return Number.parseInt(value);
+//       }
+//       return value;
+//   }
+// }
+
+// function vtoo(value: unknown): number | string {
+//   switch (value) {
+//     case false:
+//       return ":false";
+    
+//     case true:
+//       return ":true";
+    
+//     default:
+//       switch (typeof value) {
+//         case "number":
+//         case "string":
+//           return value;
         
-        default:
-          return ":null";
-      }
-  }
-}
+//         default:
+//           return ":null";
+//       }
+//   }
+// }
